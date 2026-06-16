@@ -1,0 +1,141 @@
+# ============================================================
+#  NicknamePlugin - 환경 설정
+#  메시지 텍스트는 messages.yml 에서 관리합니다.
+#  모든 텍스트는 MiniMessage 포맷: <gold>, <red>, <gradient:red:blue>, <bold>, <reset> ...
+# ============================================================
+
+# ------------------------------------------------------------
+#  저장소
+#  type: yml | mariadb
+# ------------------------------------------------------------
+storage:
+  type: mariadb
+  mariadb:
+    host: localhost
+    port: 3306
+    database: nickname
+    username: root
+    password: "2931"
+    pool-size: 10
+    table-name: nicknames
+    # 멀티서버(공유 DB) 환경 동기화 - updated_at 기반 폴링
+    multi-server-sync:
+      enabled: true
+      poll-interval-seconds: 3
+
+# ------------------------------------------------------------
+#  닉네임 규격
+# ------------------------------------------------------------
+nickname:
+  # 정규식: 한글 가-힣 만 허용
+  regex: "^[가-힣]+$"
+  min-length: 2
+  max-length: 5
+  # 이미 같은 위장닉을 쓰는 사람이 있으면 차단
+  unique: true
+  # 다른 유저의 진짜 이름을 위장닉으로 못 쓰게 차단
+  block-existing-real-name: true
+
+# ------------------------------------------------------------
+#  머리 위 닉네임 (Name Tag) — PacketEvents 기반
+#  - true:  위장닉이 있는 플레이어의 머리 위에 위장닉을 표시 (PLAYER_INFO_UPDATE 가로채기).
+#           위장닉 없는 플레이어는 진짜 닉이 그대로 표시 (vanilla).
+#  - false: 본 플러그인은 머리 위에 손대지 않음.
+#
+#  ※ 필수: 서버에 PacketEvents 플러그인 설치 필요. 없으면 이 기능만 자동으로 꺼집니다.
+#  ※ 충돌 주의: Velocitab 의 remove_nametags 가 true 면 모든 nametag 가 가려져
+#    본 기능도 안 보입니다. 본 플러그인을 머리 위 닉네임 주체로 쓰려면
+#    Velocitab 설정에서 remove_nametags: false 로 두세요.
+# ------------------------------------------------------------
+name-tag:
+  enabled: true
+
+# ------------------------------------------------------------
+#  탭리스트 표시 이름 (Bukkit playerListName API)
+#  - true  : 위장닉을 탭리스트에도 표시 (위장닉이 있을 때)
+#  - false : 탭리스트는 진짜 이름 그대로 유지
+#  ※ Velocity 프록시 환경에서는 탭리스트가 Velocitab 에 의해 관리되므로
+#    이 값에 관계없이 클라이언트가 보는 탭리스트는 Velocitab 설정을 따릅니다.
+# ------------------------------------------------------------
+tab-list:
+  enabled: false
+
+# ------------------------------------------------------------
+#  messages.yml 의 {player_name} 자리에 들어갈 표시명
+#    display = 위장이 있으면 위장, 없으면 진짜
+#    real    = 항상 진짜
+# ------------------------------------------------------------
+display-mode: display
+
+# ------------------------------------------------------------
+#  /닉네임 명령어 쿨타임 (OP 는 기본 제외)
+# ------------------------------------------------------------
+command-cooldown:
+  seconds: 3.0
+  bypass-op: true
+
+# ------------------------------------------------------------
+#  GUI 버튼 사운드
+#    sound: none 또는 빈 값이면 끔
+# ------------------------------------------------------------
+sounds:
+  change-success:
+    sound: ENTITY_EXPERIENCE_ORB_PICKUP
+    volume: 0.8
+    pitch: 1.2
+  reset-success:
+    sound: ENTITY_EXPERIENCE_ORB_PICKUP
+    volume: 0.8
+    pitch: 1.2
+
+# ------------------------------------------------------------
+#  닉네임 변경권 아이템
+# ------------------------------------------------------------
+ticket:
+  material: PAPER
+  custom-model-data: 20001
+  name: "<gradient:#b5b9ff:#2b2c49>닉네임 변경권 &c( 거래 불가 )"
+  lore:
+    - ""
+    - "&e/닉네임 &f명령어를 통해,"
+    - "&f한글 닉네임으로 변경할 수 있습니다."
+  glint: true
+
+# ------------------------------------------------------------
+#  모루 GUI 슬롯
+#   slot-0 = 입력 슬롯 (리소스팩으로 시각적으로 숨김)
+#   slot-1 = 초기화 버튼
+#   slot-2 = 결과(변경) 버튼
+# ------------------------------------------------------------
+gui:
+  title: "<shift:-60><glyph:nickname>"
+  # 슬롯 동기화 주기(틱). 0 이하면 비활성화.
+  sync-slots-ticks: 1
+
+  slot-0:
+    material: PAPER
+    custom-model-data: 20000
+    name: " "
+    lore:
+      - ''
+      - '&f우측 변경하기 버튼을 클릭 시,'
+      - '&f입력한 닉네임으로 변경됩니다.'
+    glint: false
+
+  slot-1:
+    material: PAPER
+    custom-model-data: 20000
+    name: "&c초기화 &f<glyph:maus>"
+    lore:
+      - ""
+      - "&7원래 닉네임으로 되돌립니다."
+    glint: false
+
+  slot-2:
+    material: PAPER
+    custom-model-data: 20000
+    name: "&a변경하기 &f<glyph:maus>"
+    lore:
+      - ""
+      - "&7입력한 닉네임으로 변경됩니다."
+    glint: false

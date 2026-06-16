@@ -1,0 +1,24 @@
+name: NicknamePlugin
+version: ${project.version}
+main: com.example.nickname.NicknamePlugin
+api-version: '26.1.2'
+author: example
+description: 한글 닉네임 변경 플러그인 (모루 GUI, 타 플러그인 연동 API)
+softdepend: [PlaceholderAPI, packetevents]
+
+commands:
+  닉네임:
+    description: 닉네임 메인 명령어
+    usage: /닉네임
+    aliases: [nick, nickname, 닉]
+
+permissions:
+  nickname.use:
+    description: 닉네임 변경 GUI 사용
+    default: true
+  nickname.check:
+    description: 닉네임 확인 명령어
+    default: true
+  nickname.admin:
+    description: 닉네임 지급/초기화 등 관리 명령
+    default: op

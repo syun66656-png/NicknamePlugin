@@ -1,0 +1,46 @@
+# ============================================================
+#  NicknamePlugin - 메시지 설정
+#  MiniMessage (<#RRGGBB>, <gold>) + &#RRGGBB + & 레거시
+#  PlaceholderAPI: <glyph:info> 등 (수신 플레이어 기준, PAPI 설치 필요)
+#  플러그인 변수: <prefix> <player> <real> <fake> <nickname> <min> <max> <seconds>
+# ============================================================
+
+prefix: ""
+
+common:
+  player-only: "<prefix><red>플레이어만 사용 가능한 명령어입니다.</red>"
+  no-permission: "<glyph:info> &f권한이 없습니다."
+  player-not-found: "<prefix><red>없는 플레이어입니다.</red>"
+  reloaded: "<prefix><green>설정을 다시 불러왔습니다.</green>"
+  usage-main: "<prefix><yellow>/닉네임</yellow> <gray>- GUI 열기</gray>"
+  usage-check: "<prefix><yellow>/닉네임 확인 <닉네임></yellow>"
+  usage-give: "<prefix><yellow>/닉네임 지급 <닉네임> <수량></yellow>"
+  usage-reset: "<prefix><yellow>/닉네임 초기화 <닉네임></yellow>"
+  cooldown: "<prefix> &f잠시 후 다시 시도해 주세요. (<seconds>초)"
+
+gui:
+  open: "<glyph:info> <green>닉네임 변경 창을 열었습니다."
+  invalid-nickname: "<glyph:info> &f닉네임은 &e<min> ~ <max> &f글자 및 한글로만 변경할 수 있습니다."
+  nickname-taken: "<glyph:info> &f이미 사용 중인 닉네임입니다."
+  nickname-is-real-name: "<glyph:info> &f해당 닉네임은 다른 플레이어의 실제 닉네임이라 사용할 수 없습니다."
+  nickname-same-as-current: "<glyph:info> &f이미 해당 닉네임을 사용 중입니다."
+  no-ticket: "<glyph:info> &f닉네임 변경권이 부족하여, 변경할 수 없습니다."
+  self-changed: "<glyph:info> &f닉네임이 &6<nickname> &f(으)로 변경되었습니다."
+  self-reset: "<glyph:info> &f닉네임을 초기화했습니다."
+  self-reset-no-fake: "<glyph:info> &f한글 닉네임을 사용하고 있지 않아, 초기화를 할 수 없습니다."
+
+check:
+  has-fake: "<glyph:info> <gold><player> <white>님의 변경전 닉네임은 <gold><fake> <white>입니다."
+  no-fake: "<glyph:info> <gold><player> <white>님은 닉네임이 변경되어 있지 않습니다."
+  by-fake: "<glyph:info> <gold><fake> <white>님의 변경전 닉네임은 <gold><real> <white>입니다."
+
+give:
+  success: "<prefix><green><player>님에게 &e닉네임 변경권 <yellow><amount></yellow>개를 지급했습니다.</green>"
+  not-online: "<prefix><red>해당 플레이어가 접속 중이 아닙니다.</red>"
+  invalid-amount: "<prefix><red>수량은 1 이상의 정수여야 합니다.</red>"
+  inventory-full: "<prefix><yellow><player>님의 인벤토리가 가득 차 <amount>개를 바닥에 떨어뜨렸습니다.</yellow>"
+
+reset:
+  by-real-has-fake: "<prefix><green><player>님의 위장닉네임 <yellow><fake></yellow>(을)를 초기화 시켰습니다.</green>"
+  by-real-no-fake: "<prefix><gray><player>님은 위장닉네임을 사용하고 있지 않습니다.</gray>"
+  by-fake: "<prefix><green><fake>님의 닉네임을 기존 닉네임(<yellow><real></yellow>)으로 초기화 되었습니다.</green>"
